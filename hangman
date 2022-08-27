@@ -1,0 +1,122 @@
+# a simple hangman game with ASCII art
+import random
+
+word_list = ["aardvark", "bicycle", "cigarette", "domino", "elephant", "fireworks", "garland", "horseshoe", "iguana", "joyride", "kingfisher", "lemonade", "mustasch", "nemesis", "opposition", "promoter", "quarter", "rhomboid", "statistics", "torrent", "utility", "volley", "walk", "xylophone", "zombie", "yolk"]
+chosen_word = random.choice(word_list)
+unknown = ['-']*len(chosen_word)
+win = False
+already_guessed = []
+lives = 6
+
+def draw_hangman(lives):
+  if lives == 6:
+    print("\n")
+    print("-----------+\n",
+          " |        +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "============\n",)
+  elif lives == 5:
+    print("\n")
+    print("-----------+\n",
+        " |        +\n",
+        " O        +\n",
+        "          +\n",
+        "          +\n",
+        "          +\n",
+        "          +\n",
+        "          +\n",
+        "          +\n",
+        "============\n",)
+  elif lives == 4:
+      print("\n")
+      print("-----------+\n",
+          " |        +\n",
+          " O        +\n",
+          " |        +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "============\n",)
+  elif lives == 3:
+      print("\n")
+      print("-----------+\n",
+          " |        +\n",
+          " O        +\n",
+          "/|        +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "============\n",)
+  elif lives == 2:
+      print("\n")
+      print("-----------+\n",
+          " |        +\n",
+          " O        +\n",
+          "/|\       +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "============\n",)
+  elif lives == 1:
+      print("\n")
+      print("-----------+\n",
+          " |        +\n",
+          " O        +\n",
+          "/|\       +\n",
+          "/         +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "============\n",)
+  elif lives == 0:
+      print("\n")
+      print("-----------+\n",
+          " |        +\n",
+          " O        +\n",
+          "/|\       +\n",
+          "/ \       +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "          +\n",
+          "============\n",)
+
+
+while not win:
+  draw_hangman(lives)
+  print(''.join(unknown) + "\n")
+  guess = input("Guess a letter: ").lower()
+  if guess in already_guessed:
+    print("You already guessed letter " + guess + "\n")
+    continue
+  else:
+    already_guessed.append(guess)
+  for i, letter in enumerate(chosen_word):
+    if guess == letter:
+      unknown[i] = letter
+  if guess not in chosen_word:
+      lives -= 1
+      print("Wrong!")
+  if lives == 0:
+    draw_hangman(lives)
+    print("YOU LOST ALL LIVES!")
+    break
+  if '-' not in unknown:
+    print("YOU WON!")
+    win = True
+
+
+
